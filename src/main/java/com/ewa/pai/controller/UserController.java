@@ -58,26 +58,35 @@ public class UserController {
         m.addAttribute("users", userRepository.findAll());
         return "users";
     }
-
-    @GetMapping("/deleteUserById")
-    public String deleteUser(Model m){
-        m.addAttribute("user", new User());
-        return "deleteUserById";
-    }
-
-    @PostMapping("/deleteUser")
-    public String deleteUser(@ModelAttribute(value = "user") User user){
-        userRepository.deleteById(user.getUserid());
-        return "redirect:/users";
-    }
+//
+//    @GetMapping("/deleteUserById")
+//    public String deleteUser(Model m){
+//        m.addAttribute("user", new User());
+//        return "deleteUserById";
+//    }
+//
+//    @PostMapping("/deleteUser")
+//    public String deleteUser(@ModelAttribute(value = "user") User user){
+//        userRepository.deleteById(user.getUserid());
+//        return "redirect:/users";
+//    }
 
 
     @PostMapping("/edit")
-    public String edytuj(Model m, @ModelAttribute(value = "user") User user, @RequestParam(value="action", required=true) String action){
-        User user1 = userRepository.findByLogin(action);
-        m.addAttribute("user", user1);
-        System.out.println(action);
-        return "edit";
+    public String edytuj(Model m, @ModelAttribute(value = "user") User user, @RequestParam(value="action", required=false) String action, @RequestParam(value="delete", required=false) Integer delete){
+        if(action!=null){
+            User user1 = userRepository.findByLogin(action);
+            m.addAttribute("user", user1);
+            System.out.println(action);
+            return "edit";
+        }
+        else{
+            if(delete!=null){
+                userRepository.deleteById(delete);
+                return "redirect:/users";
+            }
+        }
+        return "redirect:/users";
     }
 
     @PostMapping("/edit1")

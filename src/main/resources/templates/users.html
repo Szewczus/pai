@@ -25,7 +25,8 @@
             <td th:text="${user.surname}" />
             <td th:text="${user.login}" />
             <td th:text="${user.password}" />
-            <td><button name="action" th:value="${user.login}" type="submit">Edytuj</button></td>
+            <td><button name="action" th:value="${user.login}" type="submit">Edit</button></td>
+            <td><button name="delete" th:value="${user.userid}" type="submit">Delete</button></td>
             </br>
         </tr>
 
