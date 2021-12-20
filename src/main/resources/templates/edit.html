@@ -10,7 +10,7 @@
     <input type="text" th:field="*{name}" th:placeholder="${user.name}"/>
     <input type="text" th:field="*{surname}" th:placeholder="${user.surname}"/>
     <input type="text" th:field="*{login}" th:placeholder="${user.login}"/>
-    <input type="password" th:field="*{password}" th:placeholder="${user.password}"/>
+    <input type="password" th:field="*{password}" />
     <button type="submit">Edytuj</button>
 </form>
 <div th:include="layout :: footer"></div>

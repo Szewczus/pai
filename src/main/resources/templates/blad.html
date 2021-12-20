@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang= "pl" xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: head">
+</head>
+<body>
+Error message:
+<!--<b th:text="${message}"></b>-->
+<tr th:each="mess: ${message}">
+    <td th:text="${mess.getDefaultMessage()}"></td>
+</tr>
+}
+<div th:include="layout :: footer"></div>
+</body>
+</html>

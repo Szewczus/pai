@@ -2,6 +2,7 @@ package com.ewa.pai.entity;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 
 @Entity
@@ -10,9 +11,13 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer userid;
+    @NotBlank(message = "Name is mandatory")
     private String name;
+    @NotBlank(message = "Surname is mandatory")
     private String surname;
+    @NotBlank(message = "Login is mandatory")
     private String login;
+    @NotBlank(message = "Password is mandatory")
     private String password;
     public User() {
     }
