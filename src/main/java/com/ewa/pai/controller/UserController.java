@@ -6,13 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -42,10 +41,15 @@ public class UserController {
     }
     @GetMapping("/profile")
     public String profilePage(Model m, Principal principal) {
-        //dodanie do modelu obiektu user - aktualnie zalogowanego użytkownika:
-        m.addAttribute("user", userRepository.findByLogin(principal.getName()));
-        //zwrócenie nazwy widoku profilu użytkownika - profile.html
-        return "profile";
+        if(userRepository.findByLogin(principal.getName())!=null){
+            //dodanie do modelu obiektu user - aktualnie zalogowanego użytkownika:
+            m.addAttribute("user", userRepository.findByLogin(principal.getName()));
+            //zwrócenie nazwy widoku profilu użytkownika - profile.html
+            return "profile";
+        }
+        else {
+            return "login";
+        }
 
     }
 
@@ -53,6 +57,34 @@ public class UserController {
     public String getUsers(Model m){
         m.addAttribute("users", userRepository.findAll());
         return "users";
+    }
+
+    @GetMapping("/deleteUserById")
+    public String deleteUser(Model m){
+        m.addAttribute("user", new User());
+        return "deleteUserById";
+    }
+
+    @PostMapping("/deleteUser")
+    public String deleteUser(@ModelAttribute(value = "user") User user){
+        userRepository.deleteById(user.getUserid());
+        return "redirect:/users";
+    }
+
+
+    @PostMapping("/edit")
+    public String edytuj(Model m, @ModelAttribute(value = "user") User user, @RequestParam(value="action", required=true) String action){
+        User user1 = userRepository.findByLogin(action);
+        m.addAttribute("user", user1);
+        System.out.println(action);
+        return "edit";
+    }
+
+    @PostMapping("/edit1")
+    public String edit1(@ModelAttribute(value = "user") User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+        return "redirect:/users";
     }
 
    //definicja metody, która zwróci do widoku users.html listę użytkowników z b

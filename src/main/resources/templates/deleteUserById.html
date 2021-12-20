@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:include="layout :: head">
+<body>
+<div th:include="layout :: navigationPanel"></div>
+    <form th:action="@{/deleteUser}" method="POST" th:object="${user}">
+        <input type="text" th:field="*{userid}" placeholder="userId"/>
+        <button type="submit">Wyślij</button>
+    </form>
+</body>
+</html>

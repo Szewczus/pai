@@ -1,26 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head th:include="layout :: head">
+    <script>
+        function edit(){
+
+        }
+    </script>
 </head>
 <body>
 <div th:include="layout :: navigationPanel"></div>
-<table>
-    <tr>
-        <td th:text="UserId" />
-        <td th:text="Name" />
-        <td th:text="Surname" />
-        <td th:text="Login" />
-        <td th:text="Password" />
-        </br>
-    </tr>
-    <tr th:each="user: ${users}">
-        <td th:text="${user.userid}" />
-        <td th:text="${user.name}" />
-        <td th:text="${user.surname}" />
-        <td th:text="${user.login}" />
-        <td th:text="${user.password}" />
-        </br>
-    </tr>
-</table>
+<form th:action="@{/edit}" method="POST">
+    <table>
+        <tr>
+            <td th:text="UserId" />
+            <td th:text="Name" />
+            <td th:text="Surname" />
+            <td th:text="Login" />
+            <td th:text="Password" />
+            </br>
+        </tr>
+        <tr th:each="user: ${users}">
+            <td th:text="${user.userid}" />
+            <td th:text="${user.name}" />
+            <td th:text="${user.surname}" />
+            <td th:text="${user.login}" />
+            <td th:text="${user.password}" />
+            <td><button name="action" th:value="${user.login}" type="submit">Edytuj</button></td>
+            </br>
+        </tr>
+
+    </table>
+</form>
 </body>
 </html>
